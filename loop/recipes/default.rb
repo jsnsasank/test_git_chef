@@ -11,8 +11,8 @@ node['loop']['pkgname'].each do |functionname|
  end
 end
 
-package "httpd" do
- action :install
+service "httpd" do
+ action [:enable,:start]
 end
 
 git '/var/www/html/' do
