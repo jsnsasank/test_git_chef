@@ -24,14 +24,21 @@ file '/opt/tools/samplefile.txt' do
   group 'root'
 end
 
-time =  Time.new.strftime("%Y%m%d%H%M%S")
+package "httpd" do
+ action :install
+end
 
-  template "/tmp/example1.txt" do
+service "httpd" do
+ action [:enable,:start]
+end
+
+time =  Time.new.strftime("%Y-%m-%d %H%M%S")
+
+template "/tmp/example1.html" do
     source    "example.erb" 
-    local     true
+    notifies :restart,"service[httpd]"
     variables(
       :time => time
     )
-    action :create
-  end
+end
 
